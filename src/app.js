@@ -21,6 +21,7 @@ const refs = {
   cardIntervalValue: document.querySelector("#card-interval-value"),
   cardNextButton: document.querySelector("#card-next-button"),
   cardPauseButton: document.querySelector("#card-pause-button"),
+  cardAltPositionsToggle: document.querySelector("#card-alt-positions-toggle"),
   cardStartButton: document.querySelector("#card-start-button"),
   cardToolbar: document.querySelector("#card-toolbar"),
   candidateSummary: document.querySelector("#candidate-summary"),
@@ -518,6 +519,7 @@ function renderControls() {
   refs.minFretInput.value = String(state.settings.minFret);
   refs.maxFretInput.value = String(state.settings.maxFret);
   refs.soundToggle.checked = state.settings.soundEnabled;
+  refs.cardAltPositionsToggle.checked = state.settings.cardShowAltPositions;
   refs.openStringToggle.checked = state.settings.includeOpenStrings;
 
   refs.candidateSummary.textContent = `${state.candidates.length}개 위치`;
@@ -568,6 +570,15 @@ function renderFretboard() {
   const currentStringIndex = current
     ? renderStrings.findIndex((stringInfo) => stringInfo.string === current.string)
     : -1;
+  const alternatePositions =
+    current &&
+    state.settings.mode === "card" &&
+    state.settings.cardShowAltPositions &&
+    state.quizRevealed
+      ? state.candidates.filter(
+          (position) => position.id !== current.id && position.noteIndex === current.noteIndex
+        )
+      : [];
   const markerX = current ? markerCenter(fretXs, current.fret) : null;
   const markerY = current ? stringYs[currentStringIndex] : null;
   const isQuizHidden = state.settings.mode === "quiz" && !state.quizRevealed;
@@ -702,6 +713,34 @@ function renderFretboard() {
         />
       `;
     }).join("")}
+
+    ${alternatePositions
+      .map((position) => {
+        const alternateStringIndex = renderStrings.findIndex(
+          (stringInfo) => stringInfo.string === position.string
+        );
+        const alternateX = markerCenter(fretXs, position.fret);
+        const alternateY = stringYs[alternateStringIndex];
+
+        return `
+          <circle
+            class="svg-alt-marker"
+            cx="${alternateX}"
+            cy="${alternateY}"
+            r="${isCardLayout ? 12 : 11}"
+            fill="rgba(255, 255, 255, 0.16)"
+            stroke="rgba(255, 255, 255, 0.4)"
+            stroke-width="2"
+          />
+          <circle
+            cx="${alternateX}"
+            cy="${alternateY}"
+            r="${isCardLayout ? 3.2 : 3}"
+            fill="rgba(255, 255, 255, 0.62)"
+          />
+        `;
+      })
+      .join("")}
 
     ${current
       ? `
@@ -947,6 +986,12 @@ function bindEvents() {
 
   refs.soundToggle.addEventListener("change", (event) => {
     state.settings.soundEnabled = event.target.checked;
+    persistSettings();
+    renderAll();
+  });
+
+  refs.cardAltPositionsToggle.addEventListener("change", (event) => {
+    state.settings.cardShowAltPositions = event.target.checked;
     persistSettings();
     renderAll();
   });
