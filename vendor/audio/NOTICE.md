@@ -1,9 +1,9 @@
-오디오 샘플 출처
+# 오디오 샘플 고지
 
-- 기타 샘플 데이터: `0270_FluidR3_GM_sf2_file.js`
-  - 원본 배포 페이지: https://surikov.github.io/webaudiofontdata/
-  - 악기 프리셋 페이지: https://surikov.github.io/webaudiofontdata/sound/0270_FluidR3_GM_sf2_file.html
-  - 라이선스 참고: FluidR3 / MIT
-  - 라이선스 안내 페이지: https://github.com/musescore/MuseScore/blob/master/share/sound/FluidR3Mono_License.md
+`0270_FluidR3_GM_sf2_file.js`는 [surikov/webaudiofontdata의 Electric Guitar (clean) 프리셋](https://surikov.github.io/webaudiofontdata/sound/0270_FluidR3_GM_sf2_file.html)과 바이트 단위로 동일한 파일입니다.
 
-이 프로젝트에서는 WebAudioFont 데이터 중 `Electric Guitar (clean)` 의 FluidR3 기반 샘플 데이터를 로컬에 포함해 사용합니다.
+- WebAudioFont 데이터 배포본: Copyright (c) 2017 Srgy Surkv — [MIT 전문](licenses/WebAudioFontData-LICENSE.txt).
+- 원본 FluidR3: Copyright (c) 2000-2002, 2008 Frank Wen — [MIT 전문](licenses/FluidR3-COPYING.txt), [저작자·기여자 원문](licenses/FluidR3-README.txt).
+- 상위 배포처가 연결한 [FluidR3 계열 고지 전문](licenses/FluidR3Mono_License.md)도 보존합니다. 문서에 등장하는 파생본과 이 프리셋의 관계를 모두 확인한 것은 아닙니다.
+
+커밋·해시 검증 근거, 원문 출처와 확인 범위는 루트의 [THIRD_PARTY_NOTICES.md](../../THIRD_PARTY_NOTICES.md)를 참고하세요. 이 파일과 `licenses/`의 고지를 오디오 자산과 함께 보존하세요.
